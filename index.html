@@ -1,117 +1,215 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Diagnostic de Maturité GEPP/SBO</title>
-<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Segoe UI","DM Sans",system-ui,sans-serif;background:#f5f7fa;color:#1a1a2e;line-height:1.5}.container{max-width:680px;margin:0 auto;padding:24px 16px}h1{font-size:26px;font-weight:800;text-align:center;margin-bottom:4px}h2{font-size:15px;font-weight:500;color:#666;text-align:center;margin:0 0 24px}.card{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:24px;margin-bottom:20px}.axis-title{font-size:18px;font-weight:800;margin-bottom:4px}.axis-desc{font-size:12px;color:#888;margin-bottom:16px}.question{margin-bottom:20px}.q-text{font-size:14px;font-weight:500;margin-bottom:10px;line-height:1.6}.levels{display:flex;gap:6px;flex-wrap:wrap}.lvl-btn{padding:8px 14px;border-radius:8px;border:2px solid #e2e2e2;background:#fff;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s;font-family:inherit}.lvl-btn.active{font-weight:700}.lvl-btn:hover{border-color:#ccc}.result-box{text-align:center;padding:32px 24px;border-radius:16px;margin-bottom:20px}.score-big{font-size:56px;font-weight:900;line-height:1}.score-unit{font-size:22px;font-weight:400}.badge{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:700;font-size:14px;color:#fff;margin-top:12px}.bar-track{background:#f0f0f0;border-radius:99px;height:12px;width:100%;overflow:hidden}.bar-fill{height:12px;border-radius:99px;transition:width .5s}.axis-result{margin-bottom:16px}.axis-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.axis-result-name{font-size:14px;font-weight:600}.axis-result-score{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px}.reco{padding:16px;border-radius:12px;margin-bottom:12px;border-left:4px solid}.reco-title{font-size:14px;font-weight:700;margin-bottom:4px}.reco-text{font-size:13px;color:#555;line-height:1.6}.nav{display:flex;gap:12px;justify-content:space-between;margin-top:16px}.btn{padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid #e2e2e2;background:#fff}.btn-primary{border:none;background:linear-gradient(135deg,#1e3a8a,#15803d);color:#fff;font-weight:700}.btn:hover{opacity:.85}.btn:disabled{opacity:.4;cursor:not-allowed}.progress{margin-bottom:24px}.export-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.export-row .btn{flex:1;min-width:140px;text-align:center}.mode-row{display:flex;gap:12px;margin-bottom:24px}.mode-btn{flex:1;padding:16px;border-radius:12px;border:2px solid #e2e2e2;background:#fff;cursor:pointer;text-align:center;font-family:inherit;transition:all .2s}.mode-btn.active{border-color:#1e3a8a;background:rgba(30,58,138,0.03)}.mode-btn h3{font-size:16px;margin:0}.mode-btn p{font-size:12px;color:#888;margin:4px 0 0}.company-input{width:100%;padding:12px 16px;border-radius:10px;border:2px solid #e2e2e2;font-size:15px;font-family:inherit;margin-bottom:20px}.company-input:focus{outline:none;border-color:#1e3a8a}@media print{body{background:#fff}.btn,.export-row,.nav,.progress{display:none!important}}</style>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Segoe UI","DM Sans",system-ui,sans-serif;background:#f5f7fa;color:#1a1a2e;line-height:1.5}.container{max-width:680px;margin:0 auto;padding:24px 16px}h1{font-size:26px;font-weight:800;text-align:center;margin-bottom:4px}h2{font-size:15px;font-weight:500;color:#666;text-align:center;margin:0 0 24px}.field-label{font-size:14px;font-weight:600;display:block;margin-bottom:8px}.card{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:24px;margin-bottom:20px}.axis-title{font-size:18px;font-weight:800;margin-bottom:4px}.axis-desc{font-size:12px;color:#888;margin-bottom:16px}.question{margin-bottom:20px}.q-text{font-size:14px;font-weight:500;margin-bottom:10px;line-height:1.6}.levels{display:flex;gap:6px;flex-wrap:wrap}.lvl-btn{padding:8px 14px;border-radius:8px;border:2px solid #e2e2e2;background:#fff;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s;font-family:inherit}.lvl-btn.active{font-weight:700}.lvl-btn:hover{border-color:#ccc}.result-box{text-align:center;padding:32px 24px;border-radius:16px;margin-bottom:20px}.score-big{font-size:56px;font-weight:900;line-height:1}.score-unit{font-size:22px;font-weight:400}.badge{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:700;font-size:14px;color:#fff;margin-top:12px}.bar-track{background:#f0f0f0;border-radius:99px;height:12px;width:100%;overflow:hidden}.bar-fill{height:12px;border-radius:99px;transition:width .5s}.axis-result{margin-bottom:16px}.axis-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.axis-result-name{font-size:14px;font-weight:600}.axis-result-score{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px}.reco{padding:16px;border-radius:12px;margin-bottom:12px;border-left:4px solid}.reco-title{font-size:14px;font-weight:700;margin-bottom:4px}.reco-text{font-size:13px;color:#555;line-height:1.6}.nav{display:flex;gap:12px;justify-content:space-between;margin-top:16px}.btn{padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid #e2e2e2;background:#fff}.btn-primary{border:none;background:linear-gradient(135deg,#1e3a8a,#15803d);color:#fff;font-weight:700}.btn:hover{opacity:.85}.btn:disabled{opacity:.4;cursor:not-allowed}.progress{margin-bottom:24px}.mode-row{display:flex;gap:12px;margin-bottom:24px}.mode-btn{flex:1;padding:16px;border-radius:12px;border:2px solid #e2e2e2;background:#fff;cursor:pointer;text-align:center;font-family:inherit;transition:all .2s}.mode-btn.active{border-color:#1e3a8a;background:rgba(30,58,138,0.03)}.mode-btn h3{font-size:16px;margin:0}.mode-btn p{font-size:12px;color:#888;margin:4px 0 0}.company-input{width:100%;padding:12px 16px;border-radius:10px;border:2px solid #e2e2e2;font-size:15px;font-family:inherit;margin-bottom:20px}.company-input:focus{outline:none;border-color:#1e3a8a}.axis-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;border:2px solid #e8e8e8;margin-bottom:6px;cursor:pointer;transition:all .2s;background:#fff}.axis-row:hover{border-color:#ccc}.axis-sel{}.axis-check{width:22px;height:22px;border-radius:6px;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}.axis-row-name{font-size:14px;font-weight:600;flex:1}.axis-row-count{font-size:11px;color:#888;background:#f5f5f5;padding:3px 10px;border-radius:99px}.sel-actions{display:flex;gap:8px;margin-bottom:10px}.sel-btn{padding:5px 12px;border-radius:8px;border:1px solid #e2e2e2;background:#fff;font-size:12px;font-weight:600;cursor:pointer;color:#666;font-family:inherit}.sel-btn:hover{background:#f5f5f5}.export-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid #e2e2e2;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:50}.export-opt{width:100%;padding:14px 16px;border:none;border-bottom:1px solid #f0f0f0;background:transparent;cursor:pointer;display:flex;align-items:center;gap:12px;text-align:left;font-size:14px;font-family:inherit}.export-opt:hover{background:#f8f8f8}.export-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.export-label{font-weight:700;color:#1a1a2e}.export-sub{font-size:12px;color:#888;margin-top:2px}.scale-item{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;font-size:12px;line-height:1.5}.scale-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px}.scale-label{font-weight:700;white-space:nowrap}.scale-desc{color:#666}@media print{body{background:#fff}.btn,.nav,.progress,.export-dropdown,.sel-actions{display:none!important}}</style>
 </head><body>
 <div class="container" id="app"></div>
 <script>
 var ALL_AXES = [{"id":"gouvernance","name":"Gouvernance & Stratégie RH","color":"#1e3a8a","desc":"Évalue la manière dont la stratégie RH est définie, pilotée et alignée sur les objectifs globaux de l'entreprise : instances de décision, sponsoring de la direction, budget dédié et dialogue social.","questions":[{"id":"g1","text":"Comment qualifieriez-vous la formalisation de votre stratégie RH et son alignement avec la stratégie globale de l'entreprise ?","flash":true},{"id":"g2","text":"Où en est votre organisation concernant le pilotage de la GEPP (comité compétences, comité carrières…) ?","flash":true},{"id":"g3","text":"Comment évalueriez-vous le suivi régulier de vos indicateurs RH clés (turnover, mobilité, couverture de compétences) ?","flash":true},{"id":"g4","text":"Dans quelle mesure la direction générale porte-t-elle et sponsorise-t-elle la démarche compétences ?","flash":false},{"id":"g5","text":"Comment qualifieriez-vous l'identification et la sanctuarisation d'un budget dédié aux compétences (formation, outils, conseil) ?","flash":false},{"id":"g6","text":"Où en êtes-vous dans la construction d'une roadmap pluriannuelle de transformation des compétences ?","flash":false},{"id":"g7","text":"Comment décririez-vous l'implication des partenaires sociaux dans la démarche GEPP (accord, charte, instances…) ?","flash":false},{"id":"g8","text":"Dans quelle mesure la fonction RH dispose-t-elle de ressources dédiées à l'ingénierie des compétences (hors administration courante) ?","flash":false}]},{"id":"referentiels","name":"Référentiels de compétences","color":"#2563eb","desc":"Mesure l'existence, la complétude et la mise à jour des référentiels de compétences : couverture métier, niveaux de maîtrise, intégration des compétences émergentes et appropriation par les collaborateurs.","questions":[{"id":"r1","text":"Comment qualifieriez-vous la couverture de votre référentiel de compétences sur l'ensemble des métiers de l'organisation ?","flash":true},{"id":"r2","text":"Dans quelle mesure votre référentiel distingue-t-il compétences techniques, transverses et comportementales ?","flash":true},{"id":"r3","text":"Comment évalueriez-vous le processus de mise à jour régulière de votre référentiel de compétences ?","flash":true},{"id":"r4","text":"Où en êtes-vous dans l'intégration de niveaux de maîtrise attendus par compétence dans vos fiches métiers ?","flash":false},{"id":"r5","text":"Comment qualifieriez-vous la prise en compte des compétences émergentes (IA, data, transition écologique…) dans votre référentiel ?","flash":false},{"id":"r6","text":"Dans quelle mesure les managers et collaborateurs contribuent-ils à la construction et à la mise à jour du référentiel ?","flash":false},{"id":"r7","text":"Comment décririez-vous l'accessibilité et la compréhension du référentiel par l'ensemble des collaborateurs ?","flash":false},{"id":"r8","text":"Où en est votre organisation concernant l'existence d'un dictionnaire de compétences avec des descripteurs comportementaux par niveau ?","flash":false}]},{"id":"processus","name":"Processus GEPP","color":"#3b82f6","desc":"Analyse la structuration des processus de gestion des emplois et des parcours professionnels : entretiens, people review, mobilité interne, cartographie des emplois et plans de développement individuels.","questions":[{"id":"p1","text":"Comment qualifieriez-vous l'intégration de l'évaluation des compétences dans vos entretiens annuels et professionnels ?","flash":true},{"id":"p2","text":"Où en est votre organisation concernant la structuration d'un processus de revue des talents (people review) ?","flash":true},{"id":"p3","text":"Dans quelle mesure votre plan de développement des compétences est-il articulé avec les besoins réellement identifiés ?","flash":true},{"id":"p4","text":"Comment évalueriez-vous votre dispositif de détection et de gestion des hauts potentiels ?","flash":false},{"id":"p5","text":"Comment décririez-vous la formalisation et la communication des parcours de mobilité interne ?","flash":false},{"id":"p6","text":"Où en êtes-vous dans la construction d'une cartographie dynamique des emplois sensibles, en tension et émergents ?","flash":false},{"id":"p7","text":"Dans quelle mesure votre processus de recrutement s'appuie-t-il sur les référentiels de compétences pour définir les profils recherchés ?","flash":false},{"id":"p8","text":"Comment qualifieriez-vous le traitement des écarts entre compétences détenues et compétences cibles (plans d'action individuels) ?","flash":false}]},{"id":"outils","name":"Outils & Digitalisation","color":"#0891b2","desc":"Évalue le niveau d'outillage digital au service de la gestion des compétences : SIRH, LMS, tableaux de bord, analytique RH, interopérabilité et fiabilité des données.","questions":[{"id":"o1","text":"Comment évalueriez-vous votre SIRH en matière de gestion des compétences ?","flash":true},{"id":"o2","text":"Où en est votre organisation concernant la possibilité pour les collaborateurs d'auto-évaluer et déclarer leurs compétences via un outil digital ?","flash":true},{"id":"o3","text":"Comment qualifieriez-vous vos tableaux de bord RH pour le pilotage de la GEPP ?","flash":true},{"id":"o4","text":"Dans quelle mesure votre LMS (plateforme de formation) est-il en place et connecté aux besoins en compétences ?","flash":false},{"id":"o5","text":"Où en êtes-vous dans l'utilisation de l'IA ou de l'analytique RH pour anticiper les besoins en compétences ?","flash":false},{"id":"o6","text":"Comment décririez-vous la couverture digitale du cycle complet : évaluation → analyse des écarts → plan de développement ?","flash":false},{"id":"o7","text":"Comment évalueriez-vous la fiabilité et l'exploitabilité de vos données compétences pour la prise de décision ?","flash":false},{"id":"o8","text":"Dans quelle mesure vos outils RH (SIRH, LMS, ATS, BI…) sont-ils interconnectés et interopérables ?","flash":false}]},{"id":"operations","name":"Opérations","color":"#0d9488","desc":"Mesure la maturité des processus opérationnels : standardisation, indicateurs de performance, amélioration continue, clarté des rôles et coordination inter-fonctions.","questions":[{"id":"op1","text":"Comment qualifieriez-vous la documentation et la standardisation de vos processus opérationnels clés ?","flash":true},{"id":"op2","text":"Où en est votre organisation concernant le suivi d'indicateurs de performance opérationnelle (productivité, qualité, délais) ?","flash":true},{"id":"op3","text":"Dans quelle mesure les compétences de vos équipes opérationnelles sont-elles en adéquation avec les objectifs fixés ?","flash":true},{"id":"op4","text":"Comment évalueriez-vous le déploiement de démarches d'amélioration continue (Lean, Kaizen, Six Sigma…) ?","flash":false},{"id":"op5","text":"Comment décririez-vous la clarté et la communication des rôles et responsabilités au sein des équipes opérationnelles ?","flash":false},{"id":"op6","text":"Dans quelle mesure les retours terrain (incidents, non-conformités, suggestions) sont-ils collectés et exploités de façon systématique ?","flash":false},{"id":"op7","text":"Où en êtes-vous concernant l'audit et l'optimisation régulière de vos processus opérationnels ?","flash":false},{"id":"op8","text":"Comment qualifieriez-vous la fluidité de la coordination entre vos fonctions opérationnelles (production, logistique, qualité…) ?","flash":false}]},{"id":"planification","name":"Planification","color":"#059669","desc":"Analyse la capacité de l'organisation à anticiper ses besoins en ressources et compétences : planification annuelle, workforce planning, scénarios prospectifs et prise en compte des départs prévisibles.","questions":[{"id":"pl1","text":"Comment évalueriez-vous la formalisation de votre processus de planification annuelle (budget, effectifs, compétences) ?","flash":true},{"id":"pl2","text":"Dans quelle mesure votre planification RH intègre-t-elle les évolutions prévisibles de l'activité ?","flash":true},{"id":"pl3","text":"Où en est votre organisation concernant la modélisation de scénarios prospectifs (croissance, décroissance, transformation) ?","flash":true},{"id":"pl4","text":"Comment qualifieriez-vous l'articulation entre votre workforce planning et le plan stratégique de l'entreprise ?","flash":false},{"id":"pl5","text":"Comment décririez-vous l'anticipation de vos besoins en recrutement et en mobilité à horizon 12-36 mois ?","flash":false},{"id":"pl6","text":"Dans quelle mesure les départs prévisibles (retraites, turnover structurel) sont-ils intégrés à votre planification ?","flash":false},{"id":"pl7","text":"Où en êtes-vous dans l'utilisation d'outils de simulation et de modélisation pour la planification des effectifs ?","flash":false},{"id":"pl8","text":"Comment évalueriez-vous votre capacité à réviser et ajuster la planification en cours d'année ?","flash":false}]},{"id":"pilotage","name":"Pilotage stratégique","color":"#15803d","desc":"Évalue la capacité de pilotage au niveau stratégique : déclinaison de la vision en objectifs, revues stratégiques, tableaux de bord, gestion des risques et alignement stratégie-organisation-compétences.","questions":[{"id":"ps1","text":"Comment qualifieriez-vous la déclinaison de votre vision stratégique en objectifs mesurables et communiqués à tous les niveaux ?","flash":true},{"id":"ps2","text":"Où en est votre organisation concernant la tenue de revues stratégiques régulières (trimestrielles ou semestrielles) ?","flash":true},{"id":"ps3","text":"Dans quelle mesure vos décisions stratégiques s'appuient-elles sur des données fiables et actualisées ?","flash":true},{"id":"ps4","text":"Comment évalueriez-vous votre tableau de bord stratégique (balanced scorecard ou équivalent) ?","flash":false},{"id":"ps5","text":"Comment décririez-vous l'évaluation périodique de l'alignement entre stratégie, organisation et compétences ?","flash":false},{"id":"ps6","text":"Où en êtes-vous dans la cartographie et le suivi de vos risques stratégiques (marché, réglementaire, technologique, RH) ?","flash":false},{"id":"ps7","text":"Dans quelle mesure le CODIR/COMEX dispose-t-il d'une vision consolidée de la maturité organisationnelle ?","flash":false},{"id":"ps8","text":"Comment qualifieriez-vous l'évaluation régulière de votre capacité d'exécution stratégique (ressources, compétences, gouvernance) ?","flash":false}]}];
 var LEVELS = [{"score":1,"label":"Inexistant","color":"#e74c3c","desc":"Aucune pratique en place"},{"score":2,"label":"Initié","color":"#e67e22","desc":"Premières initiatives, non structurées"},{"score":3,"label":"Formalisé","color":"#f1c40f","desc":"Processus définis et documentés"},{"score":4,"label":"Piloté","color":"#2ecc71","desc":"Processus mesurés et améliorés"},{"score":5,"label":"Optimisé","color":"#1abc9c","desc":"Amélioration continue, référence"}];
 var RECO = {"gouvernance":{"1":"Priorité : formaliser une stratégie RH écrite, nommer un sponsor GEPP en CODIR et poser les premiers KPI.","2":"Structurer un comité de pilotage GEPP avec une fréquence trimestrielle et des objectifs mesurables.","3":"Renforcer le lien stratégie business ↔ stratégie compétences. Négocier un accord GEPP avec les IRP.","4":"Affiner le pilotage par les données. Challenger la roadmap compétences lors des revues stratégiques.","5":"Maintenir l'excellence : benchmark externe, innovation RH, partage de bonnes pratiques sectorielles."},"referentiels":{"1":"Démarrer par un référentiel simplifié sur les 5 à 10 emplois clés. Privilégier l'opérationnel à l'exhaustivité.","2":"Compléter le référentiel avec des niveaux de maîtrise et intégrer les compétences transverses.","3":"Impliquer les managers dans la mise à jour et intégrer les compétences émergentes (IA, green skills…).","4":"Automatiser la mise à jour via le SIRH et lier le référentiel aux processus d'évaluation et de formation.","5":"Référentiel vivant et prédictif : anticiper les compétences futures via la veille métier et l'IA."},"processus":{"1":"Instaurer a minima l'entretien professionnel avec un volet compétences structuré.","2":"Mettre en place une première people review et relier le plan de formation aux écarts identifiés.","3":"Formaliser les parcours de mobilité et créer une cartographie des emplois sensibles.","4":"Systématiser les plans de développement individuels et mesurer leur impact sur la performance.","5":"Processus auto-apprenant : feedback continu, IA prédictive sur les mobilités, learning in the flow of work."},"outils":{"1":"Identifier un outil simple (même un tableur structuré) pour centraliser les données compétences.","2":"Déployer un module compétences dans le SIRH existant et former les managers à son utilisation.","3":"Connecter le SIRH au LMS et aux tableaux de bord. Permettre l'auto-déclaration des compétences.","4":"Exploiter l'analytique RH pour le prédictif. Assurer l'interopérabilité de l'écosystème outils.","5":"IA au service de la GEPP : matching compétences, recommandations de formation, workforce planning automatisé."},"operations":{"1":"Priorité : documenter les 5 à 10 processus opérationnels critiques et définir des indicateurs de base.","2":"Standardiser les processus clés et mettre en place un suivi régulier des KPI opérationnels.","3":"Déployer une démarche d'amélioration continue et systématiser les retours d'expérience terrain.","4":"Optimiser la coordination inter-fonctions et automatiser le reporting opérationnel.","5":"Excellence opérationnelle : processus auto-adaptatifs, prédictif basé sur les données, benchmarking continu."},"planification":{"1":"Instaurer un cycle de planification annuel minimum intégrant effectifs, compétences et budget.","2":"Relier la planification RH aux prévisions d'activité et anticiper les départs prévisibles.","3":"Modéliser des scénarios prospectifs et formaliser un workforce planning à 12-36 mois.","4":"Outiller la planification avec des outils de simulation et intégrer les revues d'ajustement trimestrielles.","5":"Planification dynamique et prédictive : IA, jumeaux numériques organisationnels, ajustement en temps réel."},"pilotage":{"1":"Formaliser la vision stratégique et la décliner en objectifs mesurables communiqués à tous les niveaux.","2":"Mettre en place des revues stratégiques régulières et un premier tableau de bord de pilotage.","3":"Déployer un balanced scorecard et cartographier les risques stratégiques majeurs.","4":"Évaluer périodiquement l'alignement stratégie-organisation-compétences et challenger la capacité d'exécution.","5":"Pilotage agile et data-driven : tableaux de bord temps réel, IA décisionnelle, gouvernance adaptative."}};
+var selectedAxes = ALL_AXES.map(function(a){ return a.id; });
 var answers = {};
 var currentAxis = 0, currentQ = 0, screen = "home", mode = "flash", company = "";
+var showExportMenu = false;
 
-function getQs(a) {
-  return mode === "flash" ? a.questions.filter(function(q) { return q.flash; }) : a.questions;
-}
+function getActiveAxes() { return ALL_AXES.filter(function(a){ return selectedAxes.indexOf(a.id) !== -1; }); }
+function getQs(a) { return mode === "flash" ? a.questions.filter(function(q) { return q.flash; }) : a.questions; }
 function getLevelInfo(s) { var c = Math.max(1, Math.min(5, Math.round(s))); return LEVELS[c - 1]; }
 function getGlobalLevel(a) { if (a<=1.5) return LEVELS[0]; if (a<=2.5) return LEVELS[1]; if (a<=3.5) return LEVELS[2]; if (a<=4.5) return LEVELS[3]; return LEVELS[4]; }
 function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+function getTotalQs() { return getActiveAxes().reduce(function(s,a){return s+getQs(a).length},0); }
+
+function toggleAxis(id) {
+  var idx = selectedAxes.indexOf(id);
+  if (idx === -1) selectedAxes.push(id);
+  else selectedAxes.splice(idx, 1);
+  render();
+}
+function selectAll() { selectedAxes = ALL_AXES.map(function(a){ return a.id; }); render(); }
+function selectNone() { selectedAxes = []; render(); }
 
 function doAnswer(qid, score) {
   answers[qid] = score;
+  var active = getActiveAxes();
   setTimeout(function() {
-    var qs = getQs(ALL_AXES[currentAxis]);
+    var qs = getQs(active[currentAxis]);
     if (currentQ < qs.length - 1) currentQ++;
-    else if (currentAxis < ALL_AXES.length - 1) { currentAxis++; currentQ = 0; }
+    else if (currentAxis < active.length - 1) { currentAxis++; currentQ = 0; }
     render();
   }, 200);
 }
-function goPrev() { if (currentQ > 0) currentQ--; else if (currentAxis > 0) { currentAxis--; currentQ = getQs(ALL_AXES[currentAxis]).length - 1; } render(); }
-function goNext() { var qs = getQs(ALL_AXES[currentAxis]); if (currentQ < qs.length - 1) currentQ++; else if (currentAxis < ALL_AXES.length - 1) { currentAxis++; currentQ = 0; } render(); }
-function showResults() { screen = "results"; render(); }
-function goHome() { screen = "home"; answers = {}; currentAxis = 0; currentQ = 0; render(); }
+function goPrev() { var active = getActiveAxes(); if (currentQ > 0) currentQ--; else if (currentAxis > 0) { currentAxis--; currentQ = getQs(active[currentAxis]).length - 1; } render(); }
+function goNext() { var active = getActiveAxes(); var qs = getQs(active[currentAxis]); if (currentQ < qs.length - 1) currentQ++; else if (currentAxis < active.length - 1) { currentAxis++; currentQ = 0; } render(); }
+function showResults() { screen = "results"; showExportMenu = false; render(); }
+function goHome() { screen = "home"; answers = {}; currentAxis = 0; currentQ = 0; showExportMenu = false; render(); }
 function setMode(m) { mode = m; render(); }
-function startQuiz() { answers = {}; currentAxis = 0; currentQ = 0; screen = "quiz"; render(); }
+function startQuiz() { if (selectedAxes.length === 0) return; answers = {}; currentAxis = 0; currentQ = 0; screen = "quiz"; render(); }
 function setCompany(v) { company = v; }
+function toggleExport() { showExportMenu = !showExportMenu; render(); }
+
+function computeResults() {
+  return getActiveAxes().map(function(a) {
+    var sc = getQs(a).map(function(q){return answers[q.id]||0}).filter(function(s){return s>0});
+    var avg = sc.length ? sc.reduce(function(x,y){return x+y},0)/sc.length : 0;
+    return {id:a.id,name:a.name,color:a.color,desc:a.desc,questions:a.questions,avg:Math.round(avg*100)/100,level:getLevelInfo(avg)};
+  });
+}
+
+function drawRadar(results) {
+  var cx=160,cy=160,r=120,n=results.length;
+  if (n < 3) return "";
+  var svg='<svg viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:0 auto">';
+  for(var g=1;g<=5;g++){var gr=r*g/5;svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+gr+'" fill="none" stroke="#e0e0e0" stroke-width="1"/>';}
+  for(var i=0;i<n;i++){
+    var angle=(Math.PI*2*i/n)-Math.PI/2;
+    var x2=cx+r*Math.cos(angle),y2=cy+r*Math.sin(angle);
+    svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x2+'" y2="'+y2+'" stroke="#e0e0e0" stroke-width="1"/>';
+    var lx=cx+(r+25)*Math.cos(angle),ly=cy+(r+25)*Math.sin(angle);
+    var anchor="middle";if(lx<cx-10)anchor="end";else if(lx>cx+10)anchor="start";
+    var shortName=results[i].name.split("&")[0].split(" ").slice(0,2).join(" ");
+    svg+='<text x="'+lx+'" y="'+ly+'" text-anchor="'+anchor+'" font-size="10" font-weight="600" fill="#555" dominant-baseline="central">'+shortName+'</text>';
+  }
+  var points=[];
+  for(var i=0;i<n;i++){var angle=(Math.PI*2*i/n)-Math.PI/2;var val=results[i].avg/5;points.push((cx+r*val*Math.cos(angle)).toFixed(1)+","+(cy+r*val*Math.sin(angle)).toFixed(1));}
+  svg+='<polygon points="'+points.join(" ")+'" fill="rgba(30,58,138,0.15)" stroke="#1e3a8a" stroke-width="2"/>';
+  for(var i=0;i<n;i++){var angle=(Math.PI*2*i/n)-Math.PI/2;var val=results[i].avg/5;svg+='<circle cx="'+(cx+r*val*Math.cos(angle)).toFixed(1)+'" cy="'+(cy+r*val*Math.sin(angle)).toFixed(1)+'" r="4" fill="#1e3a8a"/>';}
+  svg+='</svg>';return svg;
+}
+
+function exportCSV(results,globalAvg,globalLevel,dt){
+  var sep=";",lines=[];
+  lines.push("Diagnostic de Maturite GEPP / SBO");
+  lines.push(company?"Entreprise"+sep+company:"");
+  lines.push("Date"+sep+dt);lines.push("Mode"+sep+(mode==="flash"?"Flash":"Complet"));
+  lines.push("Score global"+sep+globalAvg.toFixed(2)+"/5"+sep+globalLevel.label);lines.push("");
+  lines.push("Axe"+sep+"Score"+sep+"Niveau"+sep+"Recommandation");
+  results.forEach(function(r){var lvl=Math.max(1,Math.min(5,Math.round(r.avg)));lines.push(r.name+sep+r.avg.toFixed(2)+"/5"+sep+r.level.label+sep+RECO[r.id][String(lvl)]);});
+  lines.push("");lines.push("Question"+sep+"Axe"+sep+"Reponse"+sep+"Niveau");
+  results.forEach(function(r){getQs(r).forEach(function(q){var score=answers[q.id]||0;var li=score>0?getLevelInfo(score).label:"Non repondu";lines.push('"'+q.text+'"'+sep+r.name+sep+score+"/5"+sep+li);});});
+  var blob=new Blob(["\uFEFF"+lines.join("\n")],{type:"text/csv;charset=utf-8;"});
+  var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;
+  a.download="diagnostic-maturite"+(company?"-"+company.replace(/\s+/g,"-").toLowerCase():"")+".csv";a.click();URL.revokeObjectURL(url);
+}
+
+function exportPPT(results,globalAvg,gl,dt){
+  var p='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Diagnostic</title><style>body{font-family:Segoe UI,sans-serif;margin:0;color:#1a1a2e}.slide{width:960px;min-height:540px;margin:40px auto;padding:48px 60px;box-sizing:border-box;background:#fff;border:1px solid #e0e0e0;border-radius:12px;page-break-after:always}h1{font-size:32px;background:linear-gradient(135deg,#1e3a8a,#15803d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 8px}h2{font-size:22px;margin:0 0 24px;color:#333}.subtitle{font-size:14px;color:#888;margin-bottom:32px}.score-big{font-size:72px;font-weight:900;text-align:center;margin:32px 0 8px}.center{text-align:center}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:12px 16px;text-align:left;border-bottom:1px solid #eee;font-size:14px}th{background:#f8f8f8;font-weight:700;font-size:13px;color:#555}.bar-bg{background:#f0f0f0;border-radius:99px;height:14px;width:100%}.bar-fill{height:14px;border-radius:99px}.reco{padding:16px;border-radius:10px;margin-bottom:12px;border-left:4px solid}.reco-title{font-weight:700;font-size:14px;margin-bottom:4px}.reco-text{font-size:13px;color:#555;line-height:1.5}@media print{.slide{border:none;margin:0}}</style></head><body>';
+  p+='<div class="slide"><h1>Diagnostic de Maturit\u00e9</h1><h2>GEPP / SBO / Comp\u00e9tences</h2>';
+  p+='<div class="subtitle">'+(company?company+' \u00b7 ':'')+dt+' \u00b7 Mode '+(mode==="flash"?"Flash":"Complet")+'</div>';
+  p+='<div class="score-big" style="color:'+gl.color+'">'+globalAvg.toFixed(1)+'<span style="font-size:28px;font-weight:400">/5</span></div>';
+  p+='<div class="center"><span style="display:inline-block;padding:6px 20px;border-radius:99px;background:'+gl.color+';color:#fff;font-weight:700;font-size:14px">Niveau '+gl.label+'</span></div></div>';
+  p+='<div class="slide"><h2>R\u00e9sultats par axe</h2><table><tr><th>Axe</th><th>Score</th><th>Niveau</th><th style="width:40%">Progression</th></tr>';
+  results.forEach(function(r){p+='<tr><td style="font-weight:600">'+r.name+'</td><td>'+r.avg.toFixed(1)+'/5</td><td><span style="color:'+r.level.color+';font-weight:600">'+r.level.label+'</span></td><td><div class="bar-bg"><div class="bar-fill" style="width:'+(r.avg/5*100)+'%;background:'+r.color+'"></div></div></td></tr>';});
+  p+='</table></div><div class="slide"><h2>Recommandations</h2>';
+  results.forEach(function(r){var lvl=Math.max(1,Math.min(5,Math.round(r.avg)));p+='<div class="reco" style="border-color:'+r.color+';background:'+r.color+'08"><div class="reco-title" style="color:'+r.color+'">'+r.name+' \u2014 '+r.level.label+'</div><div class="reco-text">'+RECO[r.id][String(lvl)]+'</div></div>';});
+  p+='</div></body></html>';
+  var blob=new Blob([p],{type:"text/html;charset=utf-8"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;
+  a.download="diagnostic-maturite"+(company?"-"+company.replace(/\s+/g,"-").toLowerCase():"")+"-presentation.html";a.click();URL.revokeObjectURL(url);
+}
+
+function exportPPTResults(){var r=computeResults();var g=r.reduce(function(s,x){return s+x.avg},0)/r.length;exportPPT(r,g,getGlobalLevel(g),new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}));}
+function exportCSVResults(){var r=computeResults();var g=r.reduce(function(s,x){return s+x.avg},0)/r.length;exportCSV(r,g,getGlobalLevel(g),new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}));}
 
 function render() {
   var app = document.getElementById("app");
   var h = "";
 
   if (screen === "home") {
-    h += '<h1>Diagnostic de Maturité</h1>';
-    h += '<h2>GEPP / SBO / Compétences</h2>';
+    h += '<h1>Diagnostic de Maturit\u00e9</h1><h2>GEPP / SBO / Comp\u00e9tences</h2>';
+    h += '<label class="field-label">Entreprise \u00e9valu\u00e9e</label>';
     h += '<input class="company-input" placeholder="Nom de l\u2019entreprise\u2026" value="' + esc(company) + '" oninput="setCompany(this.value)" />';
+
+    h += '<label class="field-label">Mode de diagnostic</label>';
     h += '<div class="mode-row">';
-    h += '<div class="mode-btn ' + (mode==="flash"?"active":"") + '" onclick="setMode(&#39;flash&#39;)"><h3>\u26a1 Flash</h3><p>3 questions/axe</p></div>';
-    h += '<div class="mode-btn ' + (mode==="complet"?"active":"") + '" onclick="setMode(&#39;complet&#39;)"><h3>\ud83d\udd0d Complet</h3><p>8 questions/axe</p></div>';
+    h += '<div class="mode-btn '+(mode==="flash"?"active":"")+'" onclick="setMode(&#39;flash&#39;)"><h3>\u26a1 Flash</h3><p>3 questions/axe</p></div>';
+    h += '<div class="mode-btn '+(mode==="complet"?"active":"")+'" onclick="setMode(&#39;complet&#39;)"><h3>\ud83d\udd0d Complet</h3><p>8 questions/axe</p></div>';
     h += '</div>';
-    var total = ALL_AXES.reduce(function(s,a){return s+getQs(a).length},0);
-    h += '<button class="btn btn-primary" style="width:100%;padding:16px;font-size:16px" onclick="startQuiz()">Démarrer (' + total + ' questions) \u2192</button>';
-    h += '<div style="text-align:center;margin-top:16px;font-size:12px;color:#999">\u00c9chelle: Inexistant \u2192 Initié \u2192 Formalisé \u2192 Piloté \u2192 Optimisé</div>';
-    app.innerHTML = h;
-    return;
+
+    h += '<label class="field-label">Axes \u00e0 \u00e9valuer</label>';
+    h += '<div class="sel-actions"><button class="sel-btn" onclick="selectAll()">Tout s\u00e9lectionner</button><button class="sel-btn" onclick="selectNone()">Tout d\u00e9s\u00e9lectionner</button></div>';
+    for (var i = 0; i < ALL_AXES.length; i++) {
+      var a = ALL_AXES[i];
+      var sel = selectedAxes.indexOf(a.id) !== -1;
+      h += '<div class="axis-row'+(sel?" axis-sel":"")+'" style="'+(sel?"border-color:"+a.color+";background:"+a.color+"08":"")+'" onclick="toggleAxis(&#39;'+a.id+'&#39;)">';
+      h += '<div class="axis-check" style="'+(sel?"border-color:"+a.color+";background:"+a.color:"")+'">'; 
+      if (sel) h += '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      h += '</div>';
+      h += '<span class="axis-row-name" style="'+(sel?"":"color:#999")+'">' + esc(a.name) + '</span>';
+      h += '<span class="axis-row-count">' + getQs(a).length + ' questions</span>';
+      h += '</div>';
+    }
+    h += '<div style="font-size:12px;color:#888;margin:10px 0 20px;text-align:center">' + selectedAxes.length + ' axe'+(selectedAxes.length>1?"s":"")+' s\u00e9lectionn\u00e9'+(selectedAxes.length>1?"s":"")+' \u00b7 ' + getTotalQs() + ' questions</div>';
+
+    var canStart = selectedAxes.length > 0;
+    h += '<button class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;'+(canStart?"":"opacity:.4;cursor:not-allowed")+'" onclick="'+(canStart?"startQuiz()":"")+'" '+(canStart?"":"disabled")+'>D\u00e9marrer le diagnostic \u2192</button>';
+    h += '<div style="text-align:center;margin-top:16px;font-size:12px;color:#999">\u00c9chelle: Inexistant \u2192 Initi\u00e9 \u2192 Formalis\u00e9 \u2192 Pilot\u00e9 \u2192 Optimis\u00e9</div>';
+    h += '<div class="card" style="margin-top:20px;padding:20px 24px">';
+    h += '<div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#1a1a2e">Comprendre l\u2019\u00e9chelle</div>';
+    h += '<div class="scale-item"><span class="scale-dot" style="background:#e74c3c"></span><span class="scale-label">1. Inexistant</span><span class="scale-desc">\u2014 Aucune pratique en place, le sujet n\u2019est pas adress\u00e9.</span></div>';
+    h += '<div class="scale-item"><span class="scale-dot" style="background:#e67e22"></span><span class="scale-label">2. Initi\u00e9</span><span class="scale-desc">\u2014 Premi\u00e8res initiatives isol\u00e9es, non structur\u00e9es ni r\u00e9p\u00e9tables.</span></div>';
+    h += '<div class="scale-item"><span class="scale-dot" style="background:#f1c40f"></span><span class="scale-label">3. Formalis\u00e9</span><span class="scale-desc">\u2014 Processus d\u00e9finis, document\u00e9s et appliqu\u00e9s de mani\u00e8re coh\u00e9rente.</span></div>';
+    h += '<div class="scale-item"><span class="scale-dot" style="background:#2ecc71"></span><span class="scale-label">4. Pilot\u00e9</span><span class="scale-desc">\u2014 Processus mesur\u00e9s par des indicateurs, ajust\u00e9s r\u00e9guli\u00e8rement.</span></div>';
+    h += '<div class="scale-item"><span class="scale-dot" style="background:#1abc9c"></span><span class="scale-label">5. Optimis\u00e9</span><span class="scale-desc">\u2014 Am\u00e9lioration continue, le sujet est une r\u00e9f\u00e9rence dans l\u2019organisation.</span></div>';
+    h += '</div>';
+    app.innerHTML = h; return;
   }
 
   if (screen === "quiz") {
-    var axis = ALL_AXES[currentAxis], qs = getQs(axis), q = qs[currentQ];
-    var total = ALL_AXES.reduce(function(s,a){return s+getQs(a).length},0);
+    var active = getActiveAxes();
+    var axis = active[currentAxis], qs = getQs(axis), q = qs[currentQ];
+    var total = getTotalQs();
     var done = Object.keys(answers).length;
-    if (company) h += '<div style="text-align:center;font-weight:600;color:#1e3a8a;margin-bottom:12px">' + esc(company) + '</div>';
-    h += '<div class="progress"><div class="bar-track"><div class="bar-fill" style="width:' + (done/total*100) + '%;background:linear-gradient(90deg,#1e3a8a,#15803d)"></div></div>';
-    h += '<div style="text-align:right;font-size:12px;color:#888;margin-top:4px">' + done + '/' + total + '</div></div>';
-    h += '<div class="card">';
-    h += '<div class="axis-title" style="color:' + axis.color + '">' + esc(axis.name) + '</div>';
-    h += '<div class="axis-desc">' + esc(axis.desc) + '</div>';
-    h += '<div style="font-size:12px;color:#888;margin-bottom:14px">Question ' + (currentQ+1) + ' sur ' + qs.length + '</div>';
-    h += '<div class="question"><div class="q-text">' + esc(q.text) + '</div><div class="levels">';
-    for (var i = 0; i < LEVELS.length; i++) {
-      var l = LEVELS[i];
-      var active = answers[q.id] === l.score;
-      var st = active ? "border-color:"+l.color+";background:"+l.color+"18;color:"+l.color : "";
-      h += '<button class="lvl-btn' + (active?" active":"") + '" style="' + st + '" onclick="doAnswer(&#39;' + q.id + '&#39;,' + l.score + ')">' + l.score + '. ' + l.label + '</button>';
-    }
-    h += '</div></div></div>';
-    h += '<div class="nav">';
-    h += '<button class="btn" onclick="goPrev()"' + (currentAxis===0&&currentQ===0?" disabled":"") + '>\u2190 Pr\u00e9c\u00e9dent</button>';
-    if (done >= total) h += '<button class="btn btn-primary" onclick="showResults()">R\u00e9sultats \u2192</button>';
-    h += '<button class="btn" onclick="goNext()"' + (currentAxis===ALL_AXES.length-1&&currentQ===qs.length-1?" disabled":"") + '>Suivant \u2192</button>';
-    h += '</div>';
-    app.innerHTML = h;
-    return;
+    if (company) h += '<div style="text-align:center;font-weight:600;color:#1e3a8a;margin-bottom:12px">'+esc(company)+'</div>';
+    h += '<div class="progress"><div class="bar-track"><div class="bar-fill" style="width:'+(done/total*100)+'%;background:linear-gradient(90deg,#1e3a8a,#15803d)"></div></div>';
+    h += '<div style="text-align:right;font-size:12px;color:#888;margin-top:4px">'+done+'/'+total+'</div></div>';
+    h += '<div class="card"><div class="axis-title" style="color:'+axis.color+'">'+esc(axis.name)+'</div>';
+    h += '<div class="axis-desc">'+esc(axis.desc)+'</div>';
+    h += '<div style="font-size:12px;color:#888;margin-bottom:14px">Question '+(currentQ+1)+' sur '+qs.length+'</div>';
+    h += '<div class="question"><div class="q-text">'+esc(q.text)+'</div><div class="levels">';
+    for(var i=0;i<LEVELS.length;i++){var l=LEVELS[i];var act=answers[q.id]===l.score;var st=act?"border-color:"+l.color+";background:"+l.color+"18;color:"+l.color:"";
+      h+='<button class="lvl-btn'+(act?" active":"")+'" style="'+st+'" onclick="doAnswer(&#39;'+q.id+'&#39;,'+l.score+')">'+l.score+'. '+l.label+'</button>';}
+    h+='</div></div></div>';
+    h+='<div class="nav">';
+    h+='<button class="btn" onclick="goPrev()"'+(currentAxis===0&&currentQ===0?" disabled":"")+'>\u2190 Pr\u00e9c\u00e9dent</button>';
+    if(done>=total) h+='<button class="btn btn-primary" onclick="showResults()">R\u00e9sultats \u2192</button>';
+    h+='<button class="btn" onclick="goNext()"'+(currentAxis===active.length-1&&currentQ===qs.length-1?" disabled":"")+'>Suivant \u2192</button>';
+    h+='</div>';app.innerHTML=h;return;
   }
 
-  var results = ALL_AXES.map(function(a) {
-    var sc = getQs(a).map(function(q){return answers[q.id]||0}).filter(function(s){return s>0});
-    var avg = sc.length ? sc.reduce(function(x,y){return x+y},0)/sc.length : 0;
-    return {id:a.id,name:a.name,color:a.color,desc:a.desc,questions:a.questions,avg:Math.round(avg*100)/100,level:getLevelInfo(avg)};
-  });
-  var globalAvg = results.reduce(function(s,r){return s+r.avg},0)/results.length;
-  var gl = getGlobalLevel(globalAvg);
-  var dt = new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+  // Results
+  var results=computeResults();
+  var globalAvg=results.reduce(function(s,r){return s+r.avg},0)/results.length;
+  var gl=getGlobalLevel(globalAvg);
+  var dt=new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
 
-  h += '<h1>R\u00e9sultats du diagnostic</h1>';
-  if (company) h += '<div style="text-align:center;font-weight:600;color:#1e3a8a;margin:8px 0">' + esc(company) + '</div>';
-  h += '<div style="text-align:center;font-size:13px;color:#888;margin-bottom:24px">' + dt + ' \u00b7 Mode ' + (mode==="flash"?"Flash":"Complet") + '</div>';
-  h += '<div class="result-box" style="background:'+gl.color+'12;border:2px solid '+gl.color+'40"><div class="score-big" style="color:'+gl.color+'">'+globalAvg.toFixed(1)+'<span class="score-unit">/5</span></div><div class="badge" style="background:'+gl.color+'">Niveau '+gl.label+'</div><div style="font-size:13px;color:#666;margin-top:8px">'+gl.desc+'</div></div>';
+  h+='<h1>R\u00e9sultats du diagnostic</h1>';
+  if(company) h+='<div style="text-align:center;font-weight:600;color:#1e3a8a;margin:8px 0">'+esc(company)+'</div>';
+  h+='<div style="text-align:center;font-size:13px;color:#888;margin-bottom:24px">'+dt+' \u00b7 Mode '+(mode==="flash"?"Flash":"Complet")+'</div>';
+  h+='<div class="result-box" style="background:'+gl.color+'12;border:2px solid '+gl.color+'40"><div class="score-big" style="color:'+gl.color+'">'+globalAvg.toFixed(1)+'<span class="score-unit">/5</span></div><div class="badge" style="background:'+gl.color+'">Niveau '+gl.label+'</div><div style="font-size:13px;color:#666;margin-top:8px">'+gl.desc+'</div></div>';
 
-  h += '<div class="card"><h3 style="font-size:16px;font-weight:700;margin-bottom:18px">D\u00e9tail par axe</h3>';
-  for (var i=0;i<results.length;i++) {
-    var r=results[i];
-    h += '<div class="axis-result"><div class="axis-result-header"><span class="axis-result-name">'+esc(r.name)+'</span><span class="axis-result-score" style="background:'+r.level.color+'20;color:'+r.level.color+'">'+r.avg.toFixed(1)+'/5 \u00b7 '+r.level.label+'</span></div><div class="bar-track"><div class="bar-fill" style="width:'+(r.avg/5*100)+'%;background:'+r.color+'"></div></div></div>';
-  }
-  h += '</div>';
+  h+='<div class="card"><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;text-align:center">Radar de maturit\u00e9</h3>'+drawRadar(results)+'</div>';
 
-  h += '<div class="card"><h3 style="font-size:16px;font-weight:700;margin-bottom:18px">Recommandations</h3>';
-  for (var i=0;i<results.length;i++) {
-    var r=results[i];
-    var lvl=Math.max(1,Math.min(5,Math.round(r.avg)));
-    h += '<div class="reco" style="border-color:'+r.color+';background:'+r.color+'08"><div class="reco-title" style="color:'+r.color+'">'+esc(r.name)+'</div><div class="reco-text">'+esc(RECO[r.id][String(lvl)])+'</div></div>';
-  }
-  h += '</div>';
-  h += '<div class="export-row"><button class="btn btn-primary" onclick="window.print()">Exporter en PDF</button><button class="btn" onclick="goHome()">Nouveau diagnostic</button></div>';
-  app.innerHTML = h;
+  h+='<div class="card"><h3 style="font-size:16px;font-weight:700;margin-bottom:18px">D\u00e9tail par axe</h3>';
+  for(var i=0;i<results.length;i++){var r=results[i];
+    h+='<div class="axis-result"><div class="axis-result-header"><span class="axis-result-name">'+esc(r.name)+'</span><span class="axis-result-score" style="background:'+r.level.color+'20;color:'+r.level.color+'">'+r.avg.toFixed(1)+'/5 \u00b7 '+r.level.label+'</span></div><div class="bar-track"><div class="bar-fill" style="width:'+(r.avg/5*100)+'%;background:'+r.color+'"></div></div></div>';}
+  h+='</div>';
+
+  h+='<div class="card"><h3 style="font-size:16px;font-weight:700;margin-bottom:18px">Recommandations</h3>';
+  for(var i=0;i<results.length;i++){var r=results[i];var lvl=Math.max(1,Math.min(5,Math.round(r.avg)));
+    h+='<div class="reco" style="border-color:'+r.color+';background:'+r.color+'08"><div class="reco-title" style="color:'+r.color+'">'+esc(r.name)+'</div><div class="reco-text">'+esc(RECO[r.id][String(lvl)])+'</div></div>';}
+  h+='</div>';
+
+  h+='<div style="position:relative;margin-bottom:12px">';
+  h+='<button class="btn btn-primary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px" onclick="toggleExport()">Exporter les r\u00e9sultats <span style="font-size:10px;transform:rotate('+(showExportMenu?180:0)+'deg);transition:transform .2s">\u25bc</span></button>';
+  if(showExportMenu){
+    h+='<div class="export-dropdown">';
+    h+='<button class="export-opt" onclick="window.print();showExportMenu=false;render()"><div class="export-icon" style="background:#e74c3c14"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg></div><div><div class="export-label">PDF</div><div class="export-sub">Impression / PDF</div></div></button>';
+    h+='<button class="export-opt" onclick="exportCSVResults();showExportMenu=false;render()"><div class="export-icon" style="background:#27ae6014"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></div><div><div class="export-label">Excel</div><div class="export-sub">Tableur CSV avec d\u00e9tail</div></div></button>';
+    h+='<button class="export-opt" onclick="exportPPTResults();showExportMenu=false;render()"><div class="export-icon" style="background:#e67e2214"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div><div><div class="export-label">Pr\u00e9sentation</div><div class="export-sub">Slides HTML imprimables</div></div></button>';
+    h+='</div>';}
+  h+='</div>';
+  h+='<button class="btn" style="width:100%" onclick="goHome()">Nouveau diagnostic</button>';
+  app.innerHTML=h;
 }
 render();
 </script>
