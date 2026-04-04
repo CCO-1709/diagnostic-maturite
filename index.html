@@ -143,14 +143,6 @@ function render() {
     var canStart = selectedAxes.length > 0;
     h += '<button class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;'+(canStart?"":"opacity:.4;cursor:not-allowed")+'" onclick="'+(canStart?"startQuiz()":"")+'" '+(canStart?"":"disabled")+'>D\u00e9marrer le diagnostic \u2192</button>';
     h += '<div style="text-align:center;margin-top:16px;font-size:12px;color:#999">\u00c9chelle: Inexistant \u2192 Initi\u00e9 \u2192 Formalis\u00e9 \u2192 Pilot\u00e9 \u2192 Optimis\u00e9</div>';
-    h += '<div class="card" style="margin-top:20px;padding:20px 24px">';
-    h += '<div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#1a1a2e">Comprendre l\u2019\u00e9chelle</div>';
-    h += '<div class="scale-item"><span class="scale-dot" style="background:#e74c3c"></span><span class="scale-label">1. Inexistant</span><span class="scale-desc">\u2014 Aucune pratique en place, le sujet n\u2019est pas adress\u00e9.</span></div>';
-    h += '<div class="scale-item"><span class="scale-dot" style="background:#e67e22"></span><span class="scale-label">2. Initi\u00e9</span><span class="scale-desc">\u2014 Premi\u00e8res initiatives isol\u00e9es, non structur\u00e9es ni r\u00e9p\u00e9tables.</span></div>';
-    h += '<div class="scale-item"><span class="scale-dot" style="background:#f1c40f"></span><span class="scale-label">3. Formalis\u00e9</span><span class="scale-desc">\u2014 Processus d\u00e9finis, document\u00e9s et appliqu\u00e9s de mani\u00e8re coh\u00e9rente.</span></div>';
-    h += '<div class="scale-item"><span class="scale-dot" style="background:#2ecc71"></span><span class="scale-label">4. Pilot\u00e9</span><span class="scale-desc">\u2014 Processus mesur\u00e9s par des indicateurs, ajust\u00e9s r\u00e9guli\u00e8rement.</span></div>';
-    h += '<div class="scale-item"><span class="scale-dot" style="background:#1abc9c"></span><span class="scale-label">5. Optimis\u00e9</span><span class="scale-desc">\u2014 Am\u00e9lioration continue, le sujet est une r\u00e9f\u00e9rence dans l\u2019organisation.</span></div>';
-    h += '</div>';
     app.innerHTML = h; return;
   }
 
@@ -173,7 +165,16 @@ function render() {
     h+='<button class="btn" onclick="goPrev()"'+(currentAxis===0&&currentQ===0?" disabled":"")+'>\u2190 Pr\u00e9c\u00e9dent</button>';
     if(done>=total) h+='<button class="btn btn-primary" onclick="showResults()">R\u00e9sultats \u2192</button>';
     h+='<button class="btn" onclick="goNext()"'+(currentAxis===active.length-1&&currentQ===qs.length-1?" disabled":"")+'>Suivant \u2192</button>';
-    h+='</div>';app.innerHTML=h;return;
+    h+='</div>';
+    h+='<div class="card" style="margin-top:20px;padding:16px 20px">';
+    h+='<div style="font-size:12px;font-weight:700;margin-bottom:10px;color:#888">Comprendre l\u2019\u00e9chelle</div>';
+    h+='<div class="scale-item"><span class="scale-dot" style="background:#e74c3c"></span><span class="scale-label">1. Inexistant</span><span class="scale-desc">\u2014 Aucune pratique en place, le sujet n\u2019est pas adress\u00e9.</span></div>';
+    h+='<div class="scale-item"><span class="scale-dot" style="background:#e67e22"></span><span class="scale-label">2. Initi\u00e9</span><span class="scale-desc">\u2014 Premi\u00e8res initiatives isol\u00e9es, non structur\u00e9es ni r\u00e9p\u00e9tables.</span></div>';
+    h+='<div class="scale-item"><span class="scale-dot" style="background:#f1c40f"></span><span class="scale-label">3. Formalis\u00e9</span><span class="scale-desc">\u2014 Processus d\u00e9finis, document\u00e9s et appliqu\u00e9s de mani\u00e8re coh\u00e9rente.</span></div>';
+    h+='<div class="scale-item"><span class="scale-dot" style="background:#2ecc71"></span><span class="scale-label">4. Pilot\u00e9</span><span class="scale-desc">\u2014 Processus mesur\u00e9s par des indicateurs, ajust\u00e9s r\u00e9guli\u00e8rement.</span></div>';
+    h+='<div class="scale-item"><span class="scale-dot" style="background:#1abc9c"></span><span class="scale-label">5. Optimis\u00e9</span><span class="scale-desc">\u2014 Am\u00e9lioration continue, le sujet est une r\u00e9f\u00e9rence dans l\u2019organisation.</span></div>';
+    h+='</div>';
+    app.innerHTML=h;return;
   }
 
   // Results
