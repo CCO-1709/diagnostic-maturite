@@ -11,6 +11,14 @@ var RECO = {"gouvernance":{"1":["Formaliser une stratégie RH écrite et la pré
 var selectedAxes = ALL_AXES.map(function(a){ return a.id; });
 var answers = {};
 var currentAxis = 0, currentQ = 0, screen = "home", mode = "flash", company = "";
+
+var SECTOR_CONTEXT = {"Lifescience":{"regs":"GMP/GxP, FDA, EMA","focus":"qualifications réglementaires, pharmacovigilance, R&D","risk":"non-conformité réglementaire sur les compétences critiques (production, qualité, affaires réglementaires)"},"Retail":{"regs":"RGPD, droit du travail saisonnier","focus":"expérience client, omnicanalité, supply chain","risk":"turnover élevé et difficulté à fidéliser les talents en magasin"},"Food & Agroalimentaire":{"regs":"HACCP, IFS/BRC, traçabilité","focus":"sécurité alimentaire, qualité, chaîne du froid","risk":"pénurie de compétences techniques en production et qualité"},"Hospitality":{"regs":"normes d'hygiène, sécurité ERP","focus":"expérience client, saisonnalité, multi-sites","risk":"turnover structurel élevé et difficulté de montée en compétences"},"Healthcare":{"regs":"HAS, DPC, certification des établissements","focus":"parcours patient, accréditation, qualité des soins","risk":"pénurie de soignants et obsolescence rapide des compétences médicales"},"Services":{"regs":"RGPD, conformité sectorielle","focus":"capital humain, expertise conseil, relation client","risk":"fuite des talents et difficulté à objectiver les compétences immatérielles"},"Construction":{"regs":"CACES, habilitations, RE2020","focus":"sécurité, certifications obligatoires, transition écologique","risk":"vieillissement des effectifs et déficit d'attractivité sur les métiers techniques"},"Manufacturing":{"regs":"ISO 9001, lean manufacturing, industrie 4.0","focus":"automatisation, maintenance prédictive, compétences digitales","risk":"obsolescence rapide des compétences face à l'industrie 4.0"},"Defense":{"regs":"habilitations secret défense, ITAR, EAR","focus":"souveraineté, cybersécurité, compétences classifiées","risk":"rigidité des processus RH et difficulté à attirer les profils technologiques"},"Transportation":{"regs":"réglementations transport (IATA, ADR), sécurité","focus":"sécurité, décarbonation, digitalisation des flux","risk":"transition écologique imposant un reskilling massif des opérationnels"},"Secteur Public":{"regs":"GPEEC, statuts FP, loi de transformation","focus":"modernisation, usager, mobilité inter-fonctions publiques","risk":"rigidité statutaire freinant l'agilité organisationnelle et la GEPP"},"Banque & Services financiers":{"regs":"DORA, Bâle III/IV, RGPD, LCB-FT","focus":"compétences ICT/cyber, conformité, transformation digitale","risk":"exigences DORA sur les compétences numériques et résilience opérationnelle"},"Energies":{"regs":"HSE, ICPE, taxonomie verte","focus":"transition énergétique, nucléaire, ENR, compétences vertes","risk":"tension majeure sur les compétences de la transition énergétique"},"Utilities":{"regs":"réglementation eau/déchets, ICPE","focus":"infrastructure, continuité de service, transition écologique","risk":"départs massifs en retraite sur les métiers techniques d'exploitation"},"Real Estate":{"regs":"RE2020, DPE, loi Climat","focus":"transition bas carbone, digitalisation, asset management","risk":"évolution réglementaire rapide imposant de nouvelles compétences ESG"},"Luxe":{"regs":"propriété intellectuelle, RGPD","focus":"savoir-faire artisanal, expérience client, digital","risk":"transmission des savoir-faire rares et attractivité des métiers d'art"}};
+var SIZE_CONTEXT = {"Grand Groupe":{"focus":"harmonisation inter-entités, gouvernance matricielle, industrialisation des processus RH","challenge":"complexité organisationnelle et hétérogénéité des pratiques entre BU/pays"},"ETI":{"focus":"structuration progressive, équilibre agilité/formalisation, professionnalisation RH","challenge":"ressources RH limitées face à l'ampleur des chantiers de structuration"},"PME":{"focus":"pragmatisme, polyvalence, proximité managériale, priorisation","challenge":"absence de fonction RH dédiée et moyens limités pour structurer la démarche"}};
+var GEO_CONTEXT = {"National":{"focus":"cohérence nationale, conformité au droit français, ancrage territorial"},"International":{"focus":"harmonisation multi-pays, conformité multi-juridictionnelle (pay transparency EU), mobilité internationale, gestion des expatriés"}};
+var SIZE_OPTIONS = ["Grand Groupe","ETI","PME"];
+var SECTOR_OPTIONS = ["Lifescience","Retail","Food & Agroalimentaire","Hospitality","Healthcare","Services","Construction","Manufacturing","Defense","Transportation","Secteur Public","Banque & Services financiers","Energies","Utilities","Real Estate","Luxe"];
+var GEO_OPTIONS = ["National","International"];
+var companySize = "", companySector = "", companyGeo = "";
 var showExportMenu = false;
 
 function getActiveAxes() { return ALL_AXES.filter(function(a){ return selectedAxes.indexOf(a.id) !== -1; }); }
@@ -49,6 +57,9 @@ function goHome() { screen = "home"; answers = {}; currentAxis = 0; currentQ = 0
 function setMode(m) { mode = m; render(); }
 function startQuiz() { if (selectedAxes.length === 0) return; answers = {}; currentAxis = 0; currentQ = 0; screen = "quiz"; render(); }
 function setCompany(v) { company = v; }
+function setSize(v) { companySize = v; render(); }
+function setSector(v) { companySector = v; render(); }
+function setGeo(v) { companyGeo = v; render(); }
 function toggleExport() { showExportMenu = !showExportMenu; render(); }
 
 function computeResults() {
@@ -123,7 +134,10 @@ function generateSynthesis(globalAvg) {
   return "Organisation r\u00e9f\u00e9rente, innover.";
 }
 
-function generateSWOT(results, globalAvg) {
+function generateSWOT(results, globalAvg, profile) {
+  var sectorC = profile.sector && SECTOR_CONTEXT[profile.sector];
+  var sizeC = profile.size && SIZE_CONTEXT[profile.size];
+  var geoC = profile.geo && GEO_CONTEXT[profile.geo];
   var sorted = results.slice().sort(function(a,b){return b.avg-a.avg});
   var strong = results.filter(function(r){return r.avg>=3.5});
   var weak = results.filter(function(r){return r.avg<3});
@@ -138,21 +152,25 @@ function generateSWOT(results, globalAvg) {
   var fragilites = [];
   if (weak.length>0) fragilites.push("Axes critiques : " + weak.map(function(r){return r.name+" ("+r.avg.toFixed(1)+")"}).join(", ") + ".");
   else fragilites.push("Aucun axe critique, mais les axes sous 3.5/5 restent fragiles.");
+  if (sizeC) fragilites.push("Enjeu " + profile.size + " : " + sizeC.challenge + ".");
   fragilites.push(gap>1.5 ? "\u00c9cart de "+gap.toFixed(1)+" pts entre axes \u2014 risque de transformation \u00e0 deux vitesses." : "\u00c9cart limit\u00e9 ("+gap.toFixed(1)+" pts) \u2014 progression \u00e9quilibr\u00e9e mais \u00e0 acc\u00e9l\u00e9rer.");
 
   var leviers = [];
   if (mid.length>0) leviers.push("Axes proches du basculement : " + mid.map(function(r){return r.name+" ("+r.avg.toFixed(1)+")"}).join(", ") + " \u2014 effort cibl\u00e9 = impact rapide.");
   var tia = results.find(function(r){return r.id==="techno_ia"});
   if (tia) leviers.push(tia.avg<3 ? "IA sous-exploit\u00e9e ("+tia.avg.toFixed(1)+"/5) \u2014 levier majeur pour acc\u00e9l\u00e9rer." : "Maturit\u00e9 IA ("+tia.avg.toFixed(1)+"/5) \u2014 levier pour les autres axes.");
+  if (sectorC) leviers.push("Levier sectoriel " + profile.sector + " : " + sectorC.focus + ".");
   if (leviers.length===0) leviers.push("Axes au-dessus de 3/5 : levier pour tirer les dimensions en retard.");
 
   var risques = [];
-  if (weak.length>=3) risques.push(weak.length+" axes sous formalisation \u2014 risque de dispersion des efforts.");
+  if (sectorC) risques.push("Risque sectoriel " + profile.sector + " : " + sectorC.risk + ".");
+  if (weak.length>=3 risques.push(weak.length+" axes sous formalisation \u2014 risque de dispersion des efforts.");
   else if (weak.length>0) risques.push(weak.length+" axe(s) en retard pouvant freiner la transformation globale.");
   else risques.push("Risque d'essoufflement sans objectifs d'excellence.");
   var proc = results.find(function(r){return r.id==="processus"});
   if (proc && proc.avg<3) risques.push("Processus ("+proc.avg.toFixed(1)+"/5) : risque de non-conformit\u00e9 r\u00e9glementaire (pay transparency).");
-  if (risques.length<2) risques.push("\u00c9volutions techno et r\u00e9glementaires imposent une veille active.");
+  if (risques.length<2) if (sectorC) risques.push("Conformit\u00e9 : " + sectorC.regs + ".");
+  else risques.push("\u00c9volutions techno et r\u00e9glementaires imposent une veille active.");
 
   var forces = [];
   if (strong.length>0) forces.push(strong.map(function(r){return r.name}).join(", ")+" : axes pouvant servir de r\u00e9f\u00e9rence interne.");
@@ -160,20 +178,27 @@ function generateSWOT(results, globalAvg) {
   var faiblesses = [];
   if (weak.length>0) faiblesses.push(weak.map(function(r){return r.name}).join(", ")+" : sous le seuil de formalisation.");
   faiblesses.push(gap>1.5?"H\u00e9t\u00e9rog\u00e9n\u00e9it\u00e9 marqu\u00e9e ("+gap.toFixed(1)+" pts d'\u00e9cart).":"Progression homog\u00e8ne mais insuffisante sur certains axes.");
+  if (sectorC) opportunites.push("Enjeux " + profile.sector + " (" + sectorC.focus + ") comme moteur.");
   var opportunites = ["Transformation digitale et IA comme catalyseurs.", "Directive pay transparency comme levier de structuration."];
-  var menaces = ["R\u00e9glementation (pay transparency, IA Act) imposant des mises en conformit\u00e9.", "Perte de comp\u00e9titivit\u00e9 RH si maturit\u00e9 en de\u00e7\u00e0 du march\u00e9."];
+  var menaces = [sectorC ? "R\u00e9glementation sectorielle (" + sectorC.regs + ")." : "R\u00e9glementation (pay transparency, IA Act) imposant des mises en conformit\u00e9.", "Perte de comp\u00e9titivit\u00e9 RH si maturit\u00e9 en de\u00e7\u00e0 du march\u00e9."];
 
   return {adapted:{atouts:atouts,fragilites:fragilites,leviers:leviers,risques:risques},classic:{forces:forces,faiblesses:faiblesses,opportunites:opportunites,menaces:menaces}};
 }
 
-function generateGlobalRecommendation(results, globalAvg) {
+function generateGlobalRecommendation(results, globalAvg, profile) {
+  var sectorC = profile.sector && SECTOR_CONTEXT[profile.sector];
+  var sizeC = profile.size && SIZE_CONTEXT[profile.size];
   var sorted = results.slice().sort(function(a,b){return a.avg-b.avg});
   var weakest = sorted[0]; var strongest = sorted[sorted.length-1];
   var weak = results.filter(function(r){return r.avg<3});
-  if (globalAvg<2) return "Lancer un programme fondateur de structuration RH sur 12 mois, en priorisant "+weakest.name+(sorted[1]?" et "+sorted[1].name:"")+". Nommer un sponsor CODIR, sanctuariser un budget d\u00e9di\u00e9 et poser les premiers processus. Objectif 12 mois : niveau Formalis\u00e9 sur 3 axes minimum.";
+  if (globalAvg<2) var sectorSuffix = "";
+  if (sectorC) sectorSuffix = " Dans le contexte " + profile.sector + ", int\u00e9grer les exigences " + sectorC.regs + " dans la d\u00e9marche comp\u00e9tences.";
+  if (profile.geo === "International") sectorSuffix += " La dimension internationale n\u00e9cessite une harmonisation multi-pays.";
+  if (sizeC && profile.size === "PME") sectorSuffix += " En tant que PME, privil\u00e9gier une approche pragmatique.";
+  return "Lancer un programme fondateur de structuration RH sur 12 mois, en priorisant "+weakest.name+(sorted[1]?" et "+sorted[1].name:"")+". Nommer un sponsor CODIR, sanctuariser un budget d\u00e9di\u00e9 et poser les premiers processus. Objectif 12 mois : niveau Formalis\u00e9 sur 3 axes minimum.";
   if (globalAvg<3) return "Passer de l'initiative \u00e0 la structuration : formaliser les processus sur "+weak.map(function(r){return r.name}).join(", ")+" sous 6 mois. Capitaliser sur "+strongest.name+" comme mod\u00e8le interne. Prioriser la conformit\u00e9 pay transparency et lancer un pilote IA RH.";
   if (globalAvg<4) return "Ancrer le pilotage par les donn\u00e9es sur tous les axes et viser le mode Pilot\u00e9 sous 12 mois. "+(weak.length>0?"Investissement prioritaire sur "+weak.map(function(r){return r.name}).join(", ")+". ":"")+"Industrialiser l'IA RH et syst\u00e9matiser le lien comp\u00e9tences-r\u00e9mun\u00e9ration.";
-  return "Maintenir l'excellence et viser le statut d'organisation r\u00e9f\u00e9rente. Innover sur "+weakest.name+" ("+weakest.avg.toFixed(1)+"/5), d\u00e9ployer le pr\u00e9dictif RH, et se positionner comme benchmark sectoriel.";
+  return "Maintenir l\u2019excellence et viser le statut d'organisation r\u00e9f\u00e9rente. Innover sur "+weakest.name+" ("+weakest.avg.toFixed(1)+"/5), d\u00e9ployer le pr\u00e9dictif RH, et se positionner comme benchmark sectoriel.";
 }
 
 function exportPPTResults(){var r=computeResults();var g=r.reduce(function(s,x){return s+x.avg},0)/r.length;exportPPT(r,g,getGlobalLevel(g),new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}));}
@@ -185,8 +210,22 @@ function render() {
 
   if (screen === "home") {
     h += '<h1>Diagnostic de Maturit\u00e9</h1><h2>GEPP / SBO / Comp\u00e9tences</h2>';
-    h += '<label class="field-label">Entreprise \u00e9valu\u00e9e</label>';
+    
+    h += '<label class="field-label">Nom de l\u2019entreprise</label>';
     h += '<input class="company-input" placeholder="Nom de l\u2019entreprise\u2026" value="' + esc(company) + '" oninput="setCompany(this.value)" />';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px">';
+    // Size
+    h += '<div><label class="field-label" style="font-size:12px">Taille</label><select class="company-input" style="padding:10px 12px;font-size:13px;margin-bottom:0" onchange="setSize(this.value)"><option value="">S\u00e9lectionner\u2026</option>';
+    for(var si=0;si<SIZE_OPTIONS.length;si++){h+='<option value="'+SIZE_OPTIONS[si]+'"'+(companySize===SIZE_OPTIONS[si]?' selected':'')+'>'+SIZE_OPTIONS[si]+'</option>';}
+    h+='</select></div>';
+    // Sector
+    h += '<div><label class="field-label" style="font-size:12px">Secteur</label><select class="company-input" style="padding:10px 12px;font-size:13px;margin-bottom:0" onchange="setSector(this.value)"><option value="">S\u00e9lectionner\u2026</option>';
+    for(var se=0;se<SECTOR_OPTIONS.length;se++){h+='<option value="'+SECTOR_OPTIONS[se]+'"'+(companySector===SECTOR_OPTIONS[se]?' selected':'')+'>'+SECTOR_OPTIONS[se]+'</option>';}
+    h+='</select></div>';
+    // Geo
+    h += '<div><label class="field-label" style="font-size:12px">P\u00e9rim\u00e8tre</label><select class="company-input" style="padding:10px 12px;font-size:13px;margin-bottom:0" onchange="setGeo(this.value)"><option value="">S\u00e9lectionner\u2026</option>';
+    for(var gi=0;gi<GEO_OPTIONS.length;gi++){h+='<option value="'+GEO_OPTIONS[gi]+'"'+(companyGeo===GEO_OPTIONS[gi]?' selected':'')+'>'+GEO_OPTIONS[gi]+'</option>';}
+    h+='</select></div></div>';
 
     h += '<label class="field-label">Mode de diagnostic</label>';
     h += '<div class="mode-row">';
@@ -254,11 +293,13 @@ function render() {
 
   h+='<h1>R\u00e9sultats du diagnostic</h1>';
   if(company) h+='<div style="text-align:center;font-weight:600;color:#1e3a8a;margin:8px 0">'+esc(company)+'</div>';
+  var profileParts=[];if(companySize)profileParts.push(companySize);if(companySector)profileParts.push(companySector);if(companyGeo)profileParts.push(companyGeo);
+  if(profileParts.length>0) h+='<div style="text-align:center;font-size:13px;color:#666;margin-top:4px">'+profileParts.join(" \u00b7 ")+'</div>';
   h+='<div style="text-align:center;font-size:13px;color:#888;margin-bottom:24px">'+dt+' \u00b7 Mode '+(mode==="flash"?"Flash":"Complet")+'</div>';
   h+='<div class="result-box" style="background:'+gl.color+'12;border:2px solid '+gl.color+'40"><div class="score-big" style="color:'+gl.color+'">'+globalAvg.toFixed(1)+'<span class="score-unit">/5</span></div><div class="badge" style="background:'+gl.color+'">Niveau '+gl.label+'</div><div style="font-size:13px;color:#666;margin-top:8px">'+gl.desc+'</div>';
   h+='<div style="text-align:center;margin-top:16px"><span style="display:inline-block;padding:10px 20px;border-radius:99px;background:#1a1a2e;color:#fff;font-size:13px;font-weight:700;letter-spacing:0.3px">Synth\u00e8se du diagnostic : '+generateSynthesis(globalAvg)+'</span></div></div>';
 
-  var swot=generateSWOT(results,globalAvg);
+  var swot=generateSWOT(results,globalAvg,{sector:companySector,size:companySize,geo:companyGeo});
   var sa=swot.adapted;
   var quads=[{t:"Atouts",icon:"\u2705",items:sa.atouts,c:"#059669"},{t:"Fragilit\u00e9s",icon:"\u26a0\ufe0f",items:sa.fragilites,c:"#e74c3c"},{t:"Leviers",icon:"\ud83d\ude80",items:sa.leviers,c:"#2563eb"},{t:"Risques",icon:"\ud83d\udee1\ufe0f",items:sa.risques,c:"#e67e22"}];
   h+='<div class="card" style="margin-bottom:24px"><h3 style="font-size:16px;font-weight:700;margin:0 0 16px">\ud83d\udcca Analyse strat\u00e9gique</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
@@ -271,7 +312,7 @@ function render() {
   for(var ci=0;ci<cq.length;ci++){var cc=cq[ci];h+='<div style="padding:12px;border-radius:10px;background:#f8f8f8"><div style="font-size:12px;font-weight:700;color:'+cc.c+';margin-bottom:6px">'+cc.t+'</div>';for(var cj=0;cj<cc.items.length;cj++){h+='<div style="font-size:11px;line-height:1.5;color:#666;margin-bottom:4px">\u2022 '+cc.items[cj]+'</div>';}h+='</div>';}
   h+='</div></details></div>';
 
-  h+='<div style="background:linear-gradient(135deg,#1e3a8a08,#15803d08);border:2px solid #1e3a8a20;border-radius:16px;padding:24px;margin-bottom:24px"><h3 style="font-size:16px;font-weight:700;margin:0 0 12px">\ud83c\udfaf Recommandation globale</h3><div style="font-size:14px;line-height:1.7;color:#1a1a2e;font-weight:500">'+generateGlobalRecommendation(results,globalAvg)+'</div></div>';
+  h+='<div style="background:linear-gradient(135deg,#1e3a8a08,#15803d08);border:2px solid #1e3a8a20;border-radius:16px;padding:24px;margin-bottom:24px"><h3 style="font-size:16px;font-weight:700;margin:0 0 12px">\ud83c\udfaf Recommandation globale</h3><div style="font-size:14px;line-height:1.7;color:#1a1a2e;font-weight:500">'+generateGlobalRecommendation(results,globalAvg,{sector:companySector,size:companySize,geo:companyGeo})+'</div></div>';
 
   h+='<div class="card"><h3 style="font-size:16px;font-weight:700;margin-bottom:8px;text-align:center">Radar de maturit\u00e9</h3>'+drawRadar(results)+'</div>';
 
