@@ -164,13 +164,12 @@ function generateSWOT(results, globalAvg, profile) {
 
   var risques = [];
   if (sectorC) risques.push("Risque sectoriel " + profile.sector + " : " + sectorC.risk + ".");
-  if (weak.length>=3 risques.push(weak.length+" axes sous formalisation \u2014 risque de dispersion des efforts.");
+  if (weak.length>=3) risques.push(weak.length+" axes sous formalisation \u2014 risque de dispersion des efforts.");
   else if (weak.length>0) risques.push(weak.length+" axe(s) en retard pouvant freiner la transformation globale.");
   else risques.push("Risque d'essoufflement sans objectifs d'excellence.");
   var proc = results.find(function(r){return r.id==="processus"});
   if (proc && proc.avg<3) risques.push("Processus ("+proc.avg.toFixed(1)+"/5) : risque de non-conformit\u00e9 r\u00e9glementaire (pay transparency).");
-  if (risques.length<2) if (sectorC) risques.push("Conformit\u00e9 : " + sectorC.regs + ".");
-  else risques.push("\u00c9volutions techno et r\u00e9glementaires imposent une veille active.");
+  if (risques.length<2) { if (sectorC) risques.push("Conformit\u00e9 : " + sectorC.regs + "."); else risques.push("\u00c9volutions techno et r\u00e9glementaires imposent une veille active."); }
 
   var forces = [];
   if (strong.length>0) forces.push(strong.map(function(r){return r.name}).join(", ")+" : axes pouvant servir de r\u00e9f\u00e9rence interne.");
@@ -178,8 +177,8 @@ function generateSWOT(results, globalAvg, profile) {
   var faiblesses = [];
   if (weak.length>0) faiblesses.push(weak.map(function(r){return r.name}).join(", ")+" : sous le seuil de formalisation.");
   faiblesses.push(gap>1.5?"H\u00e9t\u00e9rog\u00e9n\u00e9it\u00e9 marqu\u00e9e ("+gap.toFixed(1)+" pts d'\u00e9cart).":"Progression homog\u00e8ne mais insuffisante sur certains axes.");
-  if (sectorC) opportunites.push("Enjeux " + profile.sector + " (" + sectorC.focus + ") comme moteur.");
   var opportunites = ["Transformation digitale et IA comme catalyseurs.", "Directive pay transparency comme levier de structuration."];
+  if (sectorC) opportunites.push("Enjeux " + profile.sector + " (" + sectorC.focus + ") comme moteur.");
   var menaces = [sectorC ? "R\u00e9glementation sectorielle (" + sectorC.regs + ")." : "R\u00e9glementation (pay transparency, IA Act) imposant des mises en conformit\u00e9.", "Perte de comp\u00e9titivit\u00e9 RH si maturit\u00e9 en de\u00e7\u00e0 du march\u00e9."];
 
   return {adapted:{atouts:atouts,fragilites:fragilites,leviers:leviers,risques:risques},classic:{forces:forces,faiblesses:faiblesses,opportunites:opportunites,menaces:menaces}};
@@ -191,14 +190,14 @@ function generateGlobalRecommendation(results, globalAvg, profile) {
   var sorted = results.slice().sort(function(a,b){return a.avg-b.avg});
   var weakest = sorted[0]; var strongest = sorted[sorted.length-1];
   var weak = results.filter(function(r){return r.avg<3});
-  if (globalAvg<2) var sectorSuffix = "";
+  var sectorSuffix = "";
   if (sectorC) sectorSuffix = " Dans le contexte " + profile.sector + ", int\u00e9grer les exigences " + sectorC.regs + " dans la d\u00e9marche comp\u00e9tences.";
   if (profile.geo === "International") sectorSuffix += " La dimension internationale n\u00e9cessite une harmonisation multi-pays.";
   if (sizeC && profile.size === "PME") sectorSuffix += " En tant que PME, privil\u00e9gier une approche pragmatique.";
-  return "Lancer un programme fondateur de structuration RH sur 12 mois, en priorisant "+weakest.name+(sorted[1]?" et "+sorted[1].name:"")+". Nommer un sponsor CODIR, sanctuariser un budget d\u00e9di\u00e9 et poser les premiers processus. Objectif 12 mois : niveau Formalis\u00e9 sur 3 axes minimum.";
-  if (globalAvg<3) return "Passer de l'initiative \u00e0 la structuration : formaliser les processus sur "+weak.map(function(r){return r.name}).join(", ")+" sous 6 mois. Capitaliser sur "+strongest.name+" comme mod\u00e8le interne. Prioriser la conformit\u00e9 pay transparency et lancer un pilote IA RH.";
-  if (globalAvg<4) return "Ancrer le pilotage par les donn\u00e9es sur tous les axes et viser le mode Pilot\u00e9 sous 12 mois. "+(weak.length>0?"Investissement prioritaire sur "+weak.map(function(r){return r.name}).join(", ")+". ":"")+"Industrialiser l'IA RH et syst\u00e9matiser le lien comp\u00e9tences-r\u00e9mun\u00e9ration.";
-  return "Maintenir l\u2019excellence et viser le statut d'organisation r\u00e9f\u00e9rente. Innover sur "+weakest.name+" ("+weakest.avg.toFixed(1)+"/5), d\u00e9ployer le pr\u00e9dictif RH, et se positionner comme benchmark sectoriel.";
+  if (globalAvg<2) return "Lancer un programme fondateur de structuration RH sur 12 mois, en priorisant "+weakest.name+(sorted[1]?" et "+sorted[1].name:"")+". Nommer un sponsor CODIR, sanctuariser un budget d\u00e9di\u00e9 et poser les premiers processus. Objectif 12 mois : niveau Formalis\u00e9 sur 3 axes minimum." + sectorSuffix;
+  if (globalAvg<3) return "Passer de l'initiative \u00e0 la structuration : formaliser les processus sur "+weak.map(function(r){return r.name}).join(", ")+" sous 6 mois. Capitaliser sur "+strongest.name+" comme mod\u00e8le interne. Prioriser la conformit\u00e9 pay transparency et lancer un pilote IA RH." + sectorSuffix;
+  if (globalAvg<4) return "Ancrer le pilotage par les donn\u00e9es sur tous les axes et viser le mode Pilot\u00e9 sous 12 mois. "+(weak.length>0?"Investissement prioritaire sur "+weak.map(function(r){return r.name}).join(", ")+". ":"")+"Industrialiser l'IA RH et syst\u00e9matiser le lien comp\u00e9tences-r\u00e9mun\u00e9ration." + sectorSuffix;
+  return "Maintenir l\u2019excellence et viser le statut d'organisation r\u00e9f\u00e9rente. Innover sur "+weakest.name+" ("+weakest.avg.toFixed(1)+"/5), d\u00e9ployer le pr\u00e9dictif RH, et se positionner comme benchmark sectoriel." + sectorSuffix;
 }
 
 function exportPPTResults(){var r=computeResults();var g=r.reduce(function(s,x){return s+x.avg},0)/r.length;exportPPT(r,g,getGlobalLevel(g),new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}));}
